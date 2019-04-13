@@ -1,9 +1,13 @@
-﻿version: '3'
+﻿version: "3.7"
+
 services:
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
       - "2181:2181"
+    networks:
+      - kafak-net
+
   kafka:
     image: wurstmeister/kafka:latest
     ports:
@@ -13,4 +17,20 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://:9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - d:/dotnet-test/kafkaTest:/var/run/docker.sock
+    networks:
+      - kafak-net
+  
+  client:
+    image: client:dev
+    build:
+      context: .
+    restart: always
+    depends_on:
+      - kafka
+    networks:
+      - kafak-net
+
+networks:
+  kafak-net:
+    driver: bridge
