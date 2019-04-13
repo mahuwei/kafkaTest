@@ -7,10 +7,10 @@ namespace Client {
     public class KafkaClent {
         private readonly KafkaOptions _options;
         private readonly BrokerRouter _router;
-        private const string CsTopic = "test_topic";
+        private const string CsTopic = "testtopic";
 
         public KafkaClent() {
-            _options = new KafkaOptions(new Uri("http://192.168.1.104:9092"));
+            _options = new KafkaOptions(new Uri("http://127.0.0.1:9092"));
             _router = new BrokerRouter(_options);
         }
 
